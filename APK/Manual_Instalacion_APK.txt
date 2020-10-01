@@ -1,0 +1,46 @@
+Manual de instalacion App Alzhistant
+Version 1.0.0
+
+---------------------------------------------------
+
+Requisito:
+- Un dispositivo mobil android version=> 7.0.0
+
+Antes de la instalacion:
+
+Antes de instalar la aplicacion se debe tener la consideracion de activar el dispositivo
+GPS mobil. Para eso debe desplejar la barra notificadora del mobil donde se encontrara 
+la imagen o el nombre GPS.
+
+Tambien activar el modo desarrollador del dispositivo, que debera ser android. Para eso se debe
+ingresar a Ajuste->Acerca del telefono->Informacion de software->Y presionar costantemente 7 veces la pestaña
+"Numero de compilacion", y saldra una pestaña informando que ya a sido activado el modo desarrollador.
+Para su verificacion, puede devolver a la pestaña de ajuste y la seccion al final podra encontrar "Opcion de 
+desarrollador".
+
+---------------------------------------------------
+
+Instalacion:
+
+1- Primer paso
+
+Una vez descargado la aplicacion, nos deberomos dirigir a la carpeta donde se haya 
+guardado la APk en el dispositivo mobil.
+
+2- Segundo paso 
+
+Seleccionar el APK y dar instalar.
+
+3- Tercer paso
+
+En el proceso de instalacion saldra un cuadrado de texto de advertencia por parte de "Play protect", el sistema
+de seguridad de android. Que esta apliacion no cuenta con una credencia o tipo firma de algun desarrollador
+, ya que esta aplicacion sigue en el proceso de desarrollo. Lo que se debe hacer es precionar la pestaña de
+"Instalar de todas formas".
+
+4- Cuarto paso
+
+Una vez instalado la App correctamente, se debera precionar la pestañana de abrir. Y nos dirigira a la aplicacion de Alzhistant
+mostrando la pestaña de iniciar sesion, y listo.
+
+*Si no aparece lo que se realizo en el paso 4 debera realizar todo los paso nuevamente.
