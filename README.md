@@ -1,4 +1,6 @@
 # Alzhistant1.0.0
 
-Fecha de inicio: 09-10-2020
-Fecha de entrega: 23-11-2020
+**Inicio del sprint:** 09/10/2020
+
+**Fin del sprint:** 30/11/2020
+
