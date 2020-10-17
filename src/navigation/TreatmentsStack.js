@@ -20,6 +20,12 @@ export default function TreatmentsStack() {
                 component={AddTreatment}
                 options={{ title: "Agregar Tratamientos" }}
             />
+			
+			<Stack.Screen
+				name="viewtreatments"
+				component={ViewTreatment}
+				options={{title: "Tratamientos"}}
+			/>
         </Stack.Navigator>
     )
 }

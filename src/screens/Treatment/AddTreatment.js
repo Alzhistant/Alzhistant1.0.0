@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
-import { Button } from "react-native-elements";
 
 export default function AddTreatment() {
 	

@@ -6,12 +6,7 @@ export default function Treatment( { navigation }) {
     return (
         <View style={styles.formContainer}>
             <Button
-                title="Agregar Tratamiento"
-                containerStyle={styles.btnContainer}
-                onPress={() => {navigation.navigate('addtreatments')}}
-            />
-            <Button
-                title="Ver Tratamiento"
+                title="Tratamiento 1"
                 containerStyle={styles.btnContainer}
                 //onPress={() => {navigation.navigate('')}}
             />
