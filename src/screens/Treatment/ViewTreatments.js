@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from "react-native-elements";
 
-export default function Treatment( { navigation }) {
+export default function ViewTreatments( { navigation }) {
     return (
         <View style={styles.formContainer}>
             <Button

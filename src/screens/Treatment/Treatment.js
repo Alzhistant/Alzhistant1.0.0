@@ -13,7 +13,7 @@ export default function Treatment( { navigation }) {
             <Button
                 title="Ver Tratamiento"
                 containerStyle={styles.btnContainer}
-                //onPress={() => {navigation.navigate('')}}
+                onPress={() => {navigation.navigate('viewtreatments')}}
             />
         </View>
     )
