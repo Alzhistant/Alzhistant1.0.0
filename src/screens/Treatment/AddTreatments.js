@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Text, Picker } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 
 export default function AddTreatments() {
