@@ -7,6 +7,7 @@ export default function AddTreatments() {
 	const [titulo, setTitle] = React.useState('Titulo');
 	const [desc, setDesc] = React.useState('Descripcion');
 	const [selectedValue, setSelectedValue] = useState("Medicamento");
+	const [numTime, setTimeValue] = React.useState('Cada');
 	
     return (
 		<View style={styles.formContainer}>
@@ -34,6 +35,24 @@ export default function AddTreatments() {
 				
 			</Picker>
 			<Text>Inicio: </Text>
+			<Text>Fin: </Text>
+			<Text>Periodicidad: </Text>
+			<TextInput 
+				style={styles.input}
+				keyboardType = 'numeric'
+				placeholder='Cada'
+				onChangeText={(val3) => setTitle(val3)}
+			/>
+			<Picker
+				selectedValue={selectedValue}
+				style={styles.input}
+				onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+			>
+				<Picker.Item label="Horas" value="hrs" />
+				<Picker.Item label="Días" value="dd" />
+				<Picker.Item label="Meses" value="mm" />
+				
+			</Picker>
 			
 
 		</View>
