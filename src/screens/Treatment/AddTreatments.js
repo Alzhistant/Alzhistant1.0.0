@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Text, Picker } from 'react-native';
-import DateTimePicker from "react-native-modal-datetime-picker";
 
 
 export default function AddTreatments() {
@@ -40,6 +39,8 @@ export default function AddTreatments() {
 		</View>
     )
 }
+
+
 
 const styles = StyleSheet.create({
     formContainer: {
