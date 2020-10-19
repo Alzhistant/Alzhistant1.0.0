@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Text, Picker, ScrollView } from 'react-native';
-import { Button } from "react-native-elements";
+import { 
+	View, StyleSheet, TextInput, Text, Picker, ScrollView, 
+	Alert, Button  } from 'react-native';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import TimePicker from 'react-native-simple-time-picker';
 
 
 export default function AddTreatments({ navigation }) {
@@ -9,6 +12,24 @@ export default function AddTreatments({ navigation }) {
 	const [desc, setDesc] = React.useState('Descripcion');
 	const [selectedValue, setSelectedValue] = useState("Medicamento");
 	const [numTime, setTimeValue] = React.useState('Cada');
+	
+	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+ 
+    const showDatePicker = () => {
+      setDatePickerVisibility(true);
+    };
+ 
+    const hideDatePicker = () => {
+      setDatePickerVisibility(false);
+    };
+ 
+    const handleConfirm = (date) => {
+      console.warn("Una Fecha ha sido seleccionada ", date);
+      hideDatePicker();
+    };
+	
+	const [selectedHours, selectedMinutes] = React.useState('Hora Inicio Tratamiento');
+	const [selectedHours2, selectedMinutes2] = React.useState('Hora Fin Tratamiento');
 	
     return (
 		<ScrollView style={styles.ScrollView}>
@@ -36,8 +57,35 @@ export default function AddTreatments({ navigation }) {
 				<Picker.Item label="Estimulación de Memoria" value="estimulacion" />
 				
 			</Picker>
-			<Text>Inicio: </Text>
-			<Text>Fin: </Text>
+			<Button title="Fecha Inicio Tratamiento" onPress={showDatePicker} />
+			  <DateTimePickerModal
+				isVisible={isDatePickerVisible}
+				mode="date"
+				onConfirm={handleConfirm}
+				onCancel={hideDatePicker}
+			  />
+			<Text>{selectedHours}:{selectedMinutes}</Text>
+			<TimePicker
+			  selectedHours={selectedHours}
+			  selectedMinutes={selectedMinutes}
+			  onChange={(hours) => selectedHours}
+			  onChange={(minutes) => selectedMinutes}
+			/>
+			<Button title="Fecha Fin Tratamiento" onPress={showDatePicker} />
+			  <DateTimePickerModal
+				isVisible={isDatePickerVisible}
+				mode="date"
+				onConfirm={handleConfirm}
+				onCancel={hideDatePicker}
+			  />
+			<Text>{selectedHours2}:{selectedMinutes2}</Text>
+			<TimePicker
+			  selectedHours2={selectedHours2}
+			  selectedMinutes2={selectedMinutes2}
+			  onChange={(hours) => selectedHours2}
+			  onChange={(minutes) => selectedMinutes2}
+			/>
+			
 			<Text>Periodicidad: </Text>
 			<TextInput 
 				style={styles.input}
@@ -57,15 +105,27 @@ export default function AddTreatments({ navigation }) {
 			<Button
                 title="Confirmar Tratamiento"
                 containerStyle={styles.btnContainer}
-                onPress={() => {navigation.navigate('treatments')}}
+                onPress={() => {Alert.alert(
+				  'Confirmación:',
+				  '¿Desea confirmar el tratamiento?',
+				  [
+					{ text: 'Si', onPress: () => navigation.navigate('treatments') },
+					{
+					  text: 'No',
+					  onPress: () => console.log('Tratamiento cancelado'),
+					  style: 'cancel'
+					}
+					
+				  ],
+				  { cancelable: false }
+				);}
+				}
             />
 			
 		</View>
 		</ScrollView>
     )
 }
-
-
 
 const styles = StyleSheet.create({
     formContainer: {
