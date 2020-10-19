@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Text, Picker } from 'react-native';
+import { View, StyleSheet, TextInput, Text, Picker, ScrollView } from 'react-native';
+import { Button } from "react-native-elements";
 
 
-export default function AddTreatments() {
+export default function AddTreatments({ navigation }) {
 	
 	const [titulo, setTitle] = React.useState('Titulo');
 	const [desc, setDesc] = React.useState('Descripcion');
@@ -10,6 +11,7 @@ export default function AddTreatments() {
 	const [numTime, setTimeValue] = React.useState('Cada');
 	
     return (
+		<ScrollView style={styles.ScrollView}>
 		<View style={styles.formContainer}>
 			<Text>Titulo: </Text>
 			<TextInput 
@@ -51,11 +53,15 @@ export default function AddTreatments() {
 				<Picker.Item label="Horas" value="hrs" />
 				<Picker.Item label="Días" value="dd" />
 				<Picker.Item label="Meses" value="mm" />
-				
 			</Picker>
+			<Button
+                title="Confirmar Tratamiento"
+                containerStyle={styles.btnContainer}
+                onPress={() => {navigation.navigate('treatments')}}
+            />
 			
-
 		</View>
+		</ScrollView>
     )
 }
 
@@ -68,7 +74,10 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       marginTop: 30,
     },
-	
+	btnContainer: {
+      marginTop: 20,
+      width: "80%",
+    },
 	input: {
 		borderWidth: 1,
 		borderColor: '#777',
@@ -83,6 +92,10 @@ const styles = StyleSheet.create({
 		margin: 10,
 		width: 200,
 		height: 75,
+	},
+	scrollView: {
+    backgroundColor: 'white',
+    marginHorizontal: 20,
 	},
     
   });
