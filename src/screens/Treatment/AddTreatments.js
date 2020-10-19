@@ -10,9 +10,14 @@ export default function AddTreatments({ navigation }) {
 	
 	const [titulo, setTitle] = React.useState('Titulo');
 	const [desc, setDesc] = React.useState('Descripcion');
+	
+	//Tipo de tratamiento
 	const [selectedValue, setSelectedValue] = useState("Medicamento");
+	
+	//Periodicidad del tratamiento
 	const [numTime, setTimeValue] = React.useState('Cada');
 	
+	//Variables pra las fechas
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
  
     const showDatePicker = () => {
@@ -28,6 +33,7 @@ export default function AddTreatments({ navigation }) {
       hideDatePicker();
     };
 	
+	//Variables de las horas
 	const [selectedHours, selectedMinutes] = React.useState('Hora Inicio Tratamiento');
 	const [selectedHours2, selectedMinutes2] = React.useState('Hora Fin Tratamiento');
 	
@@ -40,12 +46,14 @@ export default function AddTreatments({ navigation }) {
 				placeholder='Agrega un Título'
 				onChangeText={(val) => setTitle(val)}
 			/>
+			
 			<Text>Descripcion: </Text>
 			<TextInput 
 				style={styles.input2}
 				placeholder='Agrega una Descripcion'
 				onChangeText={(val2) => setDesc(val2)}
 			/>
+			
 			<Text>Tipo: </Text>
 			<Picker
 				selectedValue={selectedValue}
@@ -57,6 +65,7 @@ export default function AddTreatments({ navigation }) {
 				<Picker.Item label="Estimulación de Memoria" value="estimulacion" />
 				
 			</Picker>
+			
 			<Button title="Fecha Inicio Tratamiento" onPress={showDatePicker} />
 			  <DateTimePickerModal
 				isVisible={isDatePickerVisible}
@@ -71,6 +80,7 @@ export default function AddTreatments({ navigation }) {
 			  onChange={(hours) => selectedHours}
 			  onChange={(minutes) => selectedMinutes}
 			/>
+			
 			<Button title="Fecha Fin Tratamiento" onPress={showDatePicker} />
 			  <DateTimePickerModal
 				isVisible={isDatePickerVisible}
@@ -102,6 +112,7 @@ export default function AddTreatments({ navigation }) {
 				<Picker.Item label="Días" value="dd" />
 				<Picker.Item label="Meses" value="mm" />
 			</Picker>
+			
 			<Button
                 title="Confirmar Tratamiento"
                 containerStyle={styles.btnContainer}
