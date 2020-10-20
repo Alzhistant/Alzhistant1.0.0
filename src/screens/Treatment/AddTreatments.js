@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { 
-	View, StyleSheet, TextInput, Text, Picker, ScrollView, 
-	Alert, Button  } from 'react-native';
+	View, StyleSheet, 
+	TextInput, Text, 
+	Picker, ScrollView, 
+	Alert, Button  
+} from 'react-native';
 
 //Librerías para el pickers de fecha y hora
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import TimePicker from 'react-native-simple-time-picker';
 
-//Conección con las librerias de nuestra base de datos en firebase/firestore
+//Conexión con las librerias de nuestra base de datos en firebase/firestore
 import { firebaseApp } from '../../utils/firebase';
 import firebase from 'firebase/app';
 import "firebase/storage";
@@ -18,17 +21,18 @@ const db = firebase.firestore(firebaseApp);
 
 export default function AddTreatments({ navigation }) {
 	
+	//Título y Descripción
 	const [titulo, setTitle] = React.useState('Titulo');
-	const [desc, setDesc] = React.useState('Descripcion');
+	const [desc, setDesc] = React.useState('Descripción');
 	
 	//Tipo de tratamiento
-	const [selectedValue, setSelectedValue] = useState("Medicamento");
+	const [tipo, setSelectedValue] = useState("Medicamento");
 	
-	//Periodicidad del tratamiento
+	//Frecuencia del tratamiento
 	const [numTime, setTimeValue] = React.useState('Cada');
-	const [selectedValue2, setSelectedValue2] = useState("Horas");
+	const [tiempo, setSelectedValue2] = useState("Horas");
 	
-	//Variables pra las fechas
+	//Variables para las fechas y horas	
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const showDatePicker = () => {
       setDatePickerVisibility(true);
@@ -48,7 +52,7 @@ export default function AddTreatments({ navigation }) {
 	
     return (
 		//Formulario con Título, Descripción, Tipo de Tratamiento, 
-		//Fecha/Hora de inicio y final del tratamiento, Periodicidad 
+		//Fecha/Hora de inicio y final del tratamiento, Frecuencia
 		//y botón de doble confirmación
 		<ScrollView style={styles.ScrollView}>
 		<View style={styles.formContainer}>
@@ -60,16 +64,16 @@ export default function AddTreatments({ navigation }) {
 				onChangeText={(titulo) => setTitle(titulo)}
 			/>
 			
-			<Text>Descripcion: </Text>
+			<Text>Descripción: </Text>
 			<TextInput 
 				style={styles.input2}
-				placeholder='Agrega una Descripcion'
+				placeholder='Agrega una Descripción'
 				onChangeText={(desc) => setDesc(desc)}
 			/>
 			
 			<Text>Tipo: </Text>
 			<Picker
-				selectedValue={selectedValue}
+				tipo={tipo}
 				style={styles.input}
 				onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
 			>
@@ -95,8 +99,10 @@ export default function AddTreatments({ navigation }) {
 				onConfirm={handleConfirm}
 				onCancel={hideDatePicker}
 			  />
+			  
 			<Text></Text>
-			<Text>Periodicidad: </Text>
+			
+			<Text>Frecuencia: </Text>
 			<TextInput 
 				style={styles.input}
 				keyboardType = 'numeric'
@@ -104,7 +110,7 @@ export default function AddTreatments({ navigation }) {
 				onChangeText={(numTime) => setTimeValue(numTime)}
 			/>
 			<Picker
-				selectedValue2={selectedValue2}
+				tiempo={tiempo}
 				style={styles.input}
 				onValueChange={(itemValue, itemIndex) => setSelectedValue2(itemValue)}
 			>
@@ -126,12 +132,13 @@ export default function AddTreatments({ navigation }) {
 								setIsVisible(true);
 								try {
 								  db.collection("pacientes").doc("8VnAyXfmKwljqS0O7NY1").set({
+									//Conexión de variables con la base de datos
 									Tratamiento: {
 									  titulo: titulo,
 									  descripcion: desc,
-									  tipo: selectedValue,
-									  periodicidad: numTime,
-									  periodicidad_tipo: selectedValue2,
+									  tipo: tipo,
+									  frecuencia: numTime,
+									  frecuancia_tipo: tiempo,
 									}
 								  })
 								  console.log("Datos confirmados");
@@ -154,6 +161,9 @@ export default function AddTreatments({ navigation }) {
 					}
 				}
             />
+			
+			<Text></Text>
+			
 		</View>
 		</ScrollView>
     )
@@ -189,10 +199,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 20,
 	},
-	btnContainer2: {
-      marginTop: 20,
-      width: "80%",
-	  height: 20,
-    },
-    
   });
