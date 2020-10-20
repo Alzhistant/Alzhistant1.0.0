@@ -145,7 +145,6 @@ export default function AddTreatments({ navigation }) {
 					}
 				}
             />
-			
 		</View>
 		</ScrollView>
     )
