@@ -3,12 +3,12 @@ import {
 	View, StyleSheet, 
 	TextInput, Text, 
 	Picker, ScrollView, 
-	Alert, Button  
+	Alert, Button
 } from 'react-native';
 
+
 //Librerías para el pickers de fecha y hora
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import TimePicker from 'react-native-simple-time-picker';
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 //Conexión con las librerias de nuestra base de datos en firebase/firestore
 import { firebaseApp } from '../../utils/firebase';
@@ -30,7 +30,7 @@ export default function AddTreatments({ navigation }) {
 	
 	//Frecuencia del tratamiento
 	const [numTime, setTimeValue] = React.useState('Cada');
-	const [tiempo, setSelectedValue2] = useState("Horas");
+	const [tiempo, setSelectedValue2] = React.useState("Horas");
 	
 	//Variables para las fechas y horas	
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -40,15 +40,22 @@ export default function AddTreatments({ navigation }) {
     const hideDatePicker = () => {
       setDatePickerVisibility(false);
     };
+	const [fecha_inicio] = useState(false);
     const handleConfirm = (date) => {
       console.warn("Una Fecha ha sido seleccionada ", date);
 	  console.log("Una Fecha ha sido seleccionada ", date);
+	  fecha_inicio = Date.parse(date);
+	  //const dia = fecha_inicio.getDate();
+	  //console.log(dia);
+	  //document.getElementById("mi_div").innerHTML = fecha_inicio;
       hideDatePicker();
-	  
     };
+	console.log(fecha_inicio);
 	
 	//Variable para firestore
 	const [isVisible, setIsVisible] = useState(false);
+	
+	const [value] = React.useState(false);
 	
     return (
 		//Formulario con Título, Descripción, Tipo de Tratamiento, 
@@ -56,7 +63,6 @@ export default function AddTreatments({ navigation }) {
 		//y botón de doble confirmación
 		<ScrollView style={styles.ScrollView}>
 		<View style={styles.formContainer}>
-		
 			<Text>Titulo: </Text>
 			<TextInput 
 				style={styles.input}
@@ -83,9 +89,10 @@ export default function AddTreatments({ navigation }) {
 			</Picker>
 			
 			<Button title="Fecha Inicio Tratamiento" onPress={showDatePicker} />
-			  <DateTimePickerModal
+			  <DateTimePicker
 				isVisible={isDatePickerVisible}
-				mode="datetime"
+				mode="date"
+				date={value ? new Date(value) : new Date()}
 				onConfirm={handleConfirm}
 				onCancel={hideDatePicker}
 			  />
@@ -93,7 +100,7 @@ export default function AddTreatments({ navigation }) {
 			<Text></Text>
 			
 			<Button title="Fecha Fin Tratamiento" onPress={showDatePicker} />
-			  <DateTimePickerModal
+			  <DateTimePicker
 				isVisible={isDatePickerVisible}
 				mode="datetime"
 				onConfirm={handleConfirm}
@@ -138,7 +145,7 @@ export default function AddTreatments({ navigation }) {
 									  descripcion: desc,
 									  tipo: tipo,
 									  frecuencia: numTime,
-									  frecuancia_tipo: tiempo,
+									  frecuencia_tipo: tiempo,
 									}
 								  })
 								  console.log("Datos confirmados");
