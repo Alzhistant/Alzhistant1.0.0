@@ -6,6 +6,7 @@ import {
 	Alert, Button
 } from 'react-native';
 
+import moment from 'moment';
 
 //Librerías para el pickers de fecha y hora
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -18,20 +19,19 @@ import "firebase/firestore";
 
 const db = firebase.firestore(firebaseApp);
 
-
 export default function AddTreatments({ navigation }) {
-	
+
 	//Título y Descripción
 	const [titulo, setTitle] = React.useState('Titulo');
 	const [desc, setDesc] = React.useState('Descripción');
-	
+
 	//Tipo de tratamiento
 	const [tipo, setSelectedValue] = useState("Medicamento");
-	
+
 	//Frecuencia del tratamiento
 	const [numTime, setTimeValue] = React.useState('Cada');
 	const [tiempo, setSelectedValue2] = React.useState("Horas");
-	
+
 	//Variables para las fechas y horas	
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const showDatePicker = () => {
@@ -40,23 +40,15 @@ export default function AddTreatments({ navigation }) {
     const hideDatePicker = () => {
       setDatePickerVisibility(false);
     };
-	const [fecha_inicio] = useState(false);
     const handleConfirm = (date) => {
-      console.warn("Una Fecha ha sido seleccionada ", date);
-	  console.log("Una Fecha ha sido seleccionada ", date);
-	  fecha_inicio = Date.parse(date);
-	  //const dia = fecha_inicio.getDate();
-	  //console.log(dia);
-	  //document.getElementById("mi_div").innerHTML = fecha_inicio;
+      //console.warn("Una Fecha ha sido seleccionada ", date);
+	  console.log("Una Fecha ha sido seleccionada ", moment(date).format('DD/MM/YYYY'));
       hideDatePicker();
     };
-	console.log(fecha_inicio);
-	
+
 	//Variable para firestore
 	const [isVisible, setIsVisible] = useState(false);
-	
-	const [value] = React.useState(false);
-	
+
     return (
 		//Formulario con Título, Descripción, Tipo de Tratamiento, 
 		//Fecha/Hora de inicio y final del tratamiento, Frecuencia
@@ -69,14 +61,14 @@ export default function AddTreatments({ navigation }) {
 				placeholder='Agrega un Título'
 				onChangeText={(titulo) => setTitle(titulo)}
 			/>
-			
+
 			<Text>Descripción: </Text>
 			<TextInput 
 				style={styles.input2}
 				placeholder='Agrega una Descripción'
 				onChangeText={(desc) => setDesc(desc)}
 			/>
-			
+
 			<Text>Tipo: </Text>
 			<Picker
 				tipo={tipo}
@@ -87,18 +79,17 @@ export default function AddTreatments({ navigation }) {
 				<Picker.Item label="Ejercicio Físico" value="ejercicio" />
 				<Picker.Item label="Estimulación de Memoria" value="estimulacion" />
 			</Picker>
-			
+
 			<Button title="Fecha Inicio Tratamiento" onPress={showDatePicker} />
 			  <DateTimePicker
 				isVisible={isDatePickerVisible}
-				mode="date"
-				date={value ? new Date(value) : new Date()}
+				mode="datetime"
 				onConfirm={handleConfirm}
 				onCancel={hideDatePicker}
 			  />
-			
+
 			<Text></Text>
-			
+
 			<Button title="Fecha Fin Tratamiento" onPress={showDatePicker} />
 			  <DateTimePicker
 				isVisible={isDatePickerVisible}
@@ -106,9 +97,9 @@ export default function AddTreatments({ navigation }) {
 				onConfirm={handleConfirm}
 				onCancel={hideDatePicker}
 			  />
-			  
+
 			<Text></Text>
-			
+
 			<Text>Frecuencia: </Text>
 			<TextInput 
 				style={styles.input}
@@ -125,7 +116,7 @@ export default function AddTreatments({ navigation }) {
 				<Picker.Item label="Días" value="dd" />
 				<Picker.Item label="Meses" value="mm" />
 			</Picker>
-			
+
 			<Button
                 title="Confirmar Tratamiento"
                 containerStyle={styles.btnContainer}
@@ -168,9 +159,9 @@ export default function AddTreatments({ navigation }) {
 					}
 				}
             />
-			
+
 			<Text></Text>
-			
+
 		</View>
 		</ScrollView>
     )
