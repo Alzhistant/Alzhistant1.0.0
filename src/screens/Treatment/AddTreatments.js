@@ -40,12 +40,16 @@ export default function AddTreatments({ navigation }) {
     const hideDatePicker = () => {
       setDatePickerVisibility(false);
     };
+	
+	//var fecha_inicio;
     const handleConfirm = (date) => {
       //console.warn("Una Fecha ha sido seleccionada ", date);
-	  console.log("Una Fecha ha sido seleccionada ", moment(date).format('DD/MM/YYYY'));
+	  console.log("Una Fecha ha sido seleccionada ", moment(date).format('DD/MM/YYYY').toString());
+	  fecha_inicio = moment(date).format('DD/MM/YYYY').toString();
+	  console.log(fecha_inicio);
       hideDatePicker();
     };
-
+	//console.log(fecha_inicio);
 	//Variable para firestore
 	const [isVisible, setIsVisible] = useState(false);
 
