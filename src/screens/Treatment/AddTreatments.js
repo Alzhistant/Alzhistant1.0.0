@@ -199,4 +199,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 20,
 	},
-  });
+});
