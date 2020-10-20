@@ -26,6 +26,7 @@ export default function AddTreatments({ navigation }) {
 	
 	//Periodicidad del tratamiento
 	const [numTime, setTimeValue] = React.useState('Cada');
+	const [selectedValue2, setSelectedValue2] = useState("Horas");
 	
 	//Variables pra las fechas
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -37,12 +38,13 @@ export default function AddTreatments({ navigation }) {
     };
     const handleConfirm = (date) => {
       console.warn("Una Fecha ha sido seleccionada ", date);
+	  console.log("Una Fecha ha sido seleccionada ", date);
       hideDatePicker();
+	  
     };
 	
-	//Variables de las horas
-	const [selectedHours, selectedMinutes] = React.useState('Hora Inicio Tratamiento');
-	const [selectedHours2, selectedMinutes2] = React.useState('Hora Fin Tratamiento');
+	//Variable para firestore
+	const [isVisible, setIsVisible] = useState(false);
 	
     return (
 		//Formulario con Título, Descripción, Tipo de Tratamiento, 
@@ -55,14 +57,14 @@ export default function AddTreatments({ navigation }) {
 			<TextInput 
 				style={styles.input}
 				placeholder='Agrega un Título'
-				onChangeText={(val) => setTitle(val)}
+				onChangeText={(titulo) => setTitle(titulo)}
 			/>
 			
 			<Text>Descripcion: </Text>
 			<TextInput 
 				style={styles.input2}
 				placeholder='Agrega una Descripcion'
-				onChangeText={(val2) => setDesc(val2)}
+				onChangeText={(desc) => setDesc(desc)}
 			/>
 			
 			<Text>Tipo: </Text>
@@ -79,44 +81,32 @@ export default function AddTreatments({ navigation }) {
 			<Button title="Fecha Inicio Tratamiento" onPress={showDatePicker} />
 			  <DateTimePickerModal
 				isVisible={isDatePickerVisible}
-				mode="date"
+				mode="datetime"
 				onConfirm={handleConfirm}
 				onCancel={hideDatePicker}
 			  />
-			<Text>{selectedHours}:{selectedMinutes}</Text>
-			<TimePicker
-			  selectedHours={selectedHours}
-			  selectedMinutes={selectedMinutes}
-			  onChange={(hours) => selectedHours}
-			  onChange={(minutes) => selectedMinutes}
-			/>
+			
+			<Text></Text>
 			
 			<Button title="Fecha Fin Tratamiento" onPress={showDatePicker} />
 			  <DateTimePickerModal
 				isVisible={isDatePickerVisible}
-				mode="date"
+				mode="datetime"
 				onConfirm={handleConfirm}
 				onCancel={hideDatePicker}
 			  />
-			<Text>{selectedHours2}:{selectedMinutes2}</Text>
-			<TimePicker
-			  selectedHours2={selectedHours2}
-			  selectedMinutes2={selectedMinutes2}
-			  onChange={(hours) => selectedHours2}
-			  onChange={(minutes) => selectedMinutes2}
-			/>
-			
+			<Text></Text>
 			<Text>Periodicidad: </Text>
 			<TextInput 
 				style={styles.input}
 				keyboardType = 'numeric'
 				placeholder='Cada'
-				onChangeText={(val3) => setTitle(val3)}
+				onChangeText={(numTime) => setTimeValue(numTime)}
 			/>
 			<Picker
-				selectedValue={selectedValue}
+				selectedValue2={selectedValue2}
 				style={styles.input}
-				onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+				onValueChange={(itemValue, itemIndex) => setSelectedValue2(itemValue)}
 			>
 				<Picker.Item label="Horas" value="hrs" />
 				<Picker.Item label="Días" value="dd" />
@@ -132,7 +122,26 @@ export default function AddTreatments({ navigation }) {
 						  '¿Desea confirmar el tratamiento?',
 						  [
 							{ text: 'Si', 
-							  onPress: () => navigation.navigate('treatments') 
+							  onPress: () => { 
+								setIsVisible(true);
+								try {
+								  db.collection("pacientes").doc("8VnAyXfmKwljqS0O7NY1").set({
+									Tratamiento: {
+									  titulo: titulo,
+									  descripcion: desc,
+									  tipo: selectedValue,
+									  periodicidad: numTime,
+									  periodicidad_tipo: selectedValue2,
+									}
+								  })
+								  console.log("Datos confirmados");
+								  setIsVisible(false);
+								} catch (error) {
+								  setIsVisible(false);
+								  console.log("Error al subir los datos")
+								}
+								navigation.navigate('treatments')
+							  }
 							},
 							{
 							  text: 'No',
@@ -180,5 +189,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 20,
 	},
+	btnContainer2: {
+      marginTop: 20,
+      width: "80%",
+	  height: 20,
+    },
     
   });
