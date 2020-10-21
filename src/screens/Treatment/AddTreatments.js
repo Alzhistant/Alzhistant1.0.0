@@ -41,15 +41,34 @@ export default function AddTreatments({ navigation }) {
       setDatePickerVisibility(false);
     };
 	
-	//var fecha_inicio;
+	
     const handleConfirm = (date) => {
       //console.warn("Una Fecha ha sido seleccionada ", date);
-	  console.log("Una Fecha ha sido seleccionada ", moment(date).format('DD/MM/YYYY').toString());
-	  fecha_inicio = moment(date).format('DD/MM/YYYY').toString();
-	  console.log(fecha_inicio);
+	  console.log("Fecha de inicio ha sido seleccionada ", moment(date).format('DD/MM/YYYY').toString());
+	  this.fecha_i = moment(date).format('DD/MM/YYYY').toString();
+	  this.hora_i = moment(date).format('HH:MM').toString();
+	  //this.fecha_inicio = this.fecha_inicio.bind(this);
+	  
+	  
       hideDatePicker();
     };
-	//console.log(fecha_inicio);
+	/*var fecha_inicio = this.fecha_i;
+	var hora_inicio = this.hora_i;
+	console.log("Fecha y hora de inicio: ", fecha_inicio," ",hora_inicio);*/
+	
+	const handleConfirm2 = (date) => {
+      //console.warn("Una Fecha ha sido seleccionada ", date);
+	  console.log("Fecha final ha sido seleccionada ", moment(date).format('DD/MM/YYYY').toString());
+	  this.fecha_f = moment(date).format('DD/MM/YYYY').toString();
+	  this.hora_f = moment(date).format('HH:MM')
+	  //this.fecha_inicio = this.fecha_inicio.bind(this);
+	  
+	  
+      hideDatePicker();
+    };
+	//const fecha_final = this.fecha_f;
+	//const hora_final = this.hora_f;
+	
 	//Variable para firestore
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -98,7 +117,7 @@ export default function AddTreatments({ navigation }) {
 			  <DateTimePicker
 				isVisible={isDatePickerVisible}
 				mode="datetime"
-				onConfirm={handleConfirm}
+				onConfirm={handleConfirm2}
 				onCancel={hideDatePicker}
 			  />
 
@@ -133,7 +152,7 @@ export default function AddTreatments({ navigation }) {
 							  onPress: () => { 
 								setIsVisible(true);
 								try {
-								  db.collection("pacientes").doc("8VnAyXfmKwljqS0O7NY1").set({
+								  db.collection("pacientes").doc("8VnAyXfmKwljqS0O7NY1").collection("Tratamientos").add({
 									//Conexión de variables con la base de datos
 									Tratamiento: {
 									  titulo: titulo,
@@ -141,6 +160,10 @@ export default function AddTreatments({ navigation }) {
 									  tipo: tipo,
 									  frecuencia: numTime,
 									  frecuencia_tipo: tiempo,
+									  //fecha_inicio: this.fecha_i,
+									  //hora_inicio: this.hora_i,
+									  //hora_final: hora_final,
+									  //fecha_final: fecha_final
 									}
 								  })
 								  console.log("Datos confirmados");
