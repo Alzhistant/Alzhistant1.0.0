@@ -6,7 +6,8 @@ import "firebase/firestore";
 const db = firebase.firestore(firebaseApp);
 
 export default class TratamientoClass{
-    constructor(titulo, descripcion, tipo, fechaInicio, frecuencia, intervalo, fechaFin){
+    constructor(titulo, descripcion, tipo, fechaInicio, frecuencia, intervalo, fechaFin, id="EG6UCBz1EMZdv5xw04Nm"){
+            this.id = id;
             this._titulo = titulo;
             this._descripcion = descripcion;
             this._tipo = tipo;
@@ -99,6 +100,16 @@ export default class TratamientoClass{
         });
     }
 
+    eliminarTratamiento(idPaciente){
+        db.collection("pacientes").doc(idPaciente).collection("Tratamientos").doc(this.id).delete()
+        .then(function(){
+            console.log("Documento borrado exitosamente");
+        })
+        .catch(function(error){
+            console.log("Erorr al borrar el docuemento: ", error);
+        })
+    }
+
     static obtenerListaTratamientos(idPaciente){
         return new Promise((resolve) => {
             db.collection("pacientes").doc(idPaciente).collection("Tratamientos").get()
@@ -110,7 +121,6 @@ export default class TratamientoClass{
                 resolve(data)
             })
         })
-
     }
 
     static obtenerListaMedicamentos(){

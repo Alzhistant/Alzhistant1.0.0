@@ -52,10 +52,14 @@ export default function AddTreatment( {navigation} ) {
 
     const obtenerTratamientos = async () => {
         const listaTratamientos = await TratamientoClass.obtenerListaTratamientos("8VnAyXfmKwljqS0O7NY1");
-        listaTratamientos.forEach(doc => {
-            console.log(doc);
-        });
-        
+        console.log(typeof(listaTratamientos));
+        // listaTratamientos.forEach(doc => {
+        //     console.log(doc);
+        // });
+    }
+
+    const eliminarTratamiento = () => {
+        console.log("Hola Mundo")
     }
 
     
@@ -127,6 +131,12 @@ export default function AddTreatment( {navigation} ) {
                     containerStyle={styles.btnContainerAdd}
                     buttonStyle={styles.btnRegister}
                     onPress={obtenerTratamientos}
+                />
+                <Button
+                    title="ELiminar Tratamiento"
+                    containerStyle={styles.btnContainerAdd}
+                    buttonStyle={styles.btnRegister}
+                    onPress={eliminarTratamiento}
                 />
                 <DateTimePicker
                     isVisible = {show}
