@@ -1,9 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import Treatment from '../screens/Treatment/Treatment';
-import AddTreatments from '../screens/Treatment/AddTreatments';
-import ViewTreatments from '../screens/Treatment/ViewTreatments';
-
+import AddTreatment from '../screens/Treatment/AddTreatment';
 
 const Stack = createStackNavigator();
 
@@ -11,22 +9,15 @@ export default function TreatmentsStack() {
     return (
         <Stack.Navigator>
             <Stack.Screen 
-                name="treatments"
+                name="treatment"
                 component={Treatment}
                 options={{ title: "Tratamientos" }}
             />
-
             <Stack.Screen 
-                name="addtreatments"
-                component={AddTreatments}
-                options={{ title: "Agregar Tratamientos" }}
+                name="addTreatment"
+                component={AddTreatment}
+                options={{ title: "Añadir Tratamiento" }}
             />
-			
-			<Stack.Screen
-				name="viewtreatments"
-				component={ViewTreatments}
-				options={{title: "Tratamientos"}}
-			/>
         </Stack.Navigator>
     )
 }
