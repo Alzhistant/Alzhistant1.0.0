@@ -110,6 +110,16 @@ export default class TratamientoClass{
         })
     }
 
+    modificarTratamiento(idPaciente){
+        db.collection("pacientes").doc(idPaciente).collection("Tratamientos").doc(this.id).set(this.objetoTratamiento())
+        .then(function(){
+            console.log("Documento Actualizado de manera exitosa: ", this.id);
+        })
+        .catch(function(error){
+            console.log("Error al actualizar el documento: ", this.id);
+        })
+    }
+
     static obtenerListaTratamientos(idPaciente){
         return new Promise((resolve) => {
             db.collection("pacientes").doc(idPaciente).collection("Tratamientos").get()
