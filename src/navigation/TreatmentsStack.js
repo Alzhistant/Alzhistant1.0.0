@@ -8,11 +8,7 @@ const Stack = createStackNavigator();
 export default function TreatmentsStack() {
     return (
         <Stack.Navigator>
-            <Stack.Screen 
-                name="account"
-                component={Treatment}
-                options={{ title: "Tratamientos" }}
-            />
+            <Stack.Screen name="account" component={Treatment} options={{ title: "Tratamientos" }}/>
         </Stack.Navigator>
     )
 }
