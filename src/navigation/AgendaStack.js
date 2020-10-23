@@ -9,7 +9,7 @@ export default function AgendaStack() {
     return (
         <Stack.Navigator>
             <Stack.Screen 
-				name="agenda" 
+				name="agendaprincipal" 
 				component={AgendaPrincipal} 
 				options={{ title: "Agenda" }}/>
         </Stack.Navigator>
