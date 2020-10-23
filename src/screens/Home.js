@@ -1,41 +1,43 @@
-import React from 'react'
-import { StyleSheet, View,Text,TouchableOpacity,Button } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Button } from "react-native-elements";
 
-export default function Home({ navigation }) {
+export default function Home( {navigation} ) {
     return (
         <View style={styles.formContainer}>
-        {/*<Button
-            title='AGENDA'
-            containerStyle={styles.btnContainerLogin}
-            buttonStyle={styles.btnLogin}
-            onPress={() => navigation.navigate('agenda')}
-        />*/}
-
-        
-      </View>
+			<Button
+				title="Agenda"
+                containerStyle={styles.btnContainer}
+				onPress={() => {navigation.navigate('agenda')}}
+			/>
+			<Button
+				title="Guías"
+                containerStyle={styles.btnContainer}
+				//onPress={() => {navigation.navigate('')}}
+			/>
+			<Button
+				title="Comunidad"
+                containerStyle={styles.btnContainer}
+				//onPress={() => {navigation.navigate('')}}
+			/>
+			<Button
+				title="Sobre Nosotros"
+                containerStyle={styles.btnContainer}
+				//onPress={() => {navigation.navigate('')}}
+			/>
+        </View>
     )
 }
-
 
 const styles = StyleSheet.create({
     formContainer: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       marginTop: 30,
     },
-    inputForm: {
-      width: '100%',
+	btnContainer: {
       marginTop: 20,
+      width: "80%",
     },
-    btnContainerLogin: {
-      marginTop: 20,
-      width: '95%',
-    },
-    btnLogin: {
-      backgroundColor: '#00a680',
-    },
-    iconRight: {
-      color: '#c1c1c1',
-    },
-  });
+});

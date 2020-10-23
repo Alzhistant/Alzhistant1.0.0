@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import FormTratamiento from '../screens/Agenda/FormularioTratamiento';
-import Agenda from '../screens/Agenda/AgendaPrincipal.js';
+//import FormTratamiento from '../screens/Agenda/FormularioTratamiento';
+import Agenda from '../screens/Agenda/AgendaPrincipal';
 
 const Stack = createStackNavigator();
 
