@@ -6,7 +6,6 @@ import HomeStack from './HomeStack';
 import LocationStack from './LocationStack';
 import TreatmentsStack from './TreatmentsStack';
 import AccountStack from './AccountStack';
-import AgendaStack from './AgendaStack';
 import * as Location from 'expo-location';
 import * as TaskManager from 'expo-task-manager';
 
@@ -44,11 +43,6 @@ export default function Navigation() {
                     name="account"
                     component={AccountStack}
                     options={{title: "Cuenta"}}
-                />
-				<Tab.Screen 
-                    name="agenda"
-                    component={AgendaStack}
-                    options={{title: "Agenda"}}
                 />
             </Tab.Navigator>
         </NavigationContainer>
