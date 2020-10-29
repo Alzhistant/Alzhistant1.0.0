@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Button } from "react-native-elements";
 import {Calendar, CalendarList, Agenda, LocaleConfig, calendarTheme} from 'react-native-calendars';
+import Dia from '../Agenda/Dia';
 
 //https://github.com/wix/react-native-calendars
 
@@ -49,10 +50,7 @@ export default function AgendaPrincipal( {navigation} ){
 			textDayHeaderFontSize: 16
 		  }}
 		  onMonthChange={(month) => {console.log('month changed', month)}}
-		  onDayPress={(day) => {
-								console.log('selected day', day)
-							}
-					}
+		  onDayPress={(day) => {navigation.navigate('dia', { name: day.day + " de " + day.month + " " + day.year})}}
 		/>
 	)
 }

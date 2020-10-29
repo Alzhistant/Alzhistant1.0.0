@@ -18,7 +18,7 @@ export default function Treatment({ navigation }) {
     return (
         <View style={styles.formContainer}>
             
-    <Text >{tratamiento.detalle}</Text>
+    <Text > Pantalla de Tratamientos</Text>
         </View>
     )
 }
