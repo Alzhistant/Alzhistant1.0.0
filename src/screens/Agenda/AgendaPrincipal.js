@@ -1,10 +1,15 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { View, StyleSheet, Text, YellowBox } from 'react-native';
 import { Button } from "react-native-elements";
 import {Calendar, CalendarList, Agenda, LocaleConfig, calendarTheme} from 'react-native-calendars';
-import Dia from '../Agenda/Dia';
-
+import { firebaseApp } from '../../utils/firebase';
+import firebase from 'firebase/app';
+import "firebase/firestore";
+import "firebase/storage";
 //https://github.com/wix/react-native-calendars
+
+const db = firebase.firestore(firebaseApp);
+YellowBox.ignoreWarnings(["Setting a timer"])
 
 export default function AgendaPrincipal( {navigation} ){
 	LocaleConfig.locales['es'] = {
@@ -15,7 +20,35 @@ export default function AgendaPrincipal( {navigation} ){
 	  today: 'Hoy\'hui'
 	};
 	LocaleConfig.defaultLocale = 'es';
-	
+
+	const [ listPacients, setListPacients] = useState([])
+
+	useEffect(() => {
+		getPacients()
+	  },[])
+
+	const getPacients = async() =>{
+		const user = firebase.auth().currentUser;
+		console.log('UID usuario: ',user.uid)
+		if (user) {
+			//console.log('UID del usuario: ',user.uid)
+			let list = [];
+			const response = await db.collection('Clientes').doc(user.uid).collection('Pacientes').get()
+			response.forEach( document => {
+				let id = document.id
+				let nombre = document.data().nombre
+				var fechaNacimiento = new Date(document.data().birthDate.seconds * 1000)
+				let pacientes = {id,nombre,fechaNacimiento}
+				list.push(pacientes)			
+				})
+
+				setListPacients(list)
+				//console.log(list)
+		} 
+		else {
+			console.log("Nope")
+		}
+	}
 	return (
 		<Calendar
 		  style={{
@@ -50,7 +83,7 @@ export default function AgendaPrincipal( {navigation} ){
 			textDayHeaderFontSize: 16
 		  }}
 		  onMonthChange={(month) => {console.log('month changed', month)}}
-		  onDayPress={(day) => {navigation.navigate('dia', { name: day.day + " de " + day.month + " " + day.year})}}
+		onDayPress={(day) => {navigation.navigate('dia', { name: day.day + " de " + day.month + " " + day.year,day,listPacients})}}
 		/>
 	)
 }

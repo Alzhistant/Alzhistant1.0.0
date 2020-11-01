@@ -4,42 +4,59 @@ import { firebaseApp } from '../../utils/firebase';
 import firebase from 'firebase/app';
 import "firebase/storage";
 import "firebase/firestore";
+import Moment from 'moment'
 
+Moment.locale('es')
 const db = firebase.firestore(firebaseApp);
 const user = firebase.auth().currentUser;
 
 
 YellowBox.ignoreWarnings(["Setting a timer"]);
 import ItemTask from '../../components/ItemTask'
+import { and } from 'react-native-reanimated';
 
-export default function Dia({ navigation }) {
+//Funcion
+export default function Dia({ route,navigation }) {
+  const { day } = route.params;
+  const { listPacients } = route.params
   const [ listTasks, setListTasks] = useState([])
-
+  
   useEffect(() => {
     getTreatments()
   },[])
 
   const getTreatments = async() => {
+    var fecha = new Date(Moment(new Date(day.dateString)).add(3,'hours'))
+    
     let list = [];
-    console.log('-----------------------------------')
-    const response = await db.collection('pacientes').doc('9m32Obtd8VfqKWljtogH').collection('Tratamientos').get()
+    const response = await db.collection('pacientes').doc(listPacients[0].id).collection('Tratamientos').get()
           response.forEach( document => {
-            
             let id = document.id
-            let titulo = document.data().titulo
-            let descripcion = document.data().descripcion
-            let fechaFin = document.data().fechaFin
-            let fechaInicio = document.data().fechaInicio
-            let frecuencia = document.data().frecuencia
-            let intervalo = document.data().intervalo
-            let tipo = document.data().tipo
-            let dosis = document.data().dosis
-            let docum = {id,titulo,descripcion,fechaFin,fechaInicio,frecuencia,intervalo,tipo,dosis}
-            list.push(docum)
+            var fechaInicio = new Date(document.data().fechaInicio.seconds * 1000)
+            var fechaFin = new Date(document.data().fechaFin.seconds * 1000)
+            if(fecha > fechaInicio && fecha < fechaFin){
+              let titulo = document.data().titulo
+              let descripcion = document.data().descripcion
+              let frecuencia = document.data().frecuencia
+              let intervalo = document.data().intervalo
+              let tipo = document.data().tipo
+              let dosis = document.data().dosis
+              let docum = {id,titulo,descripcion,fechaFin,fechaInicio,frecuencia,intervalo,tipo,dosis}
+              list.push(docum)
+            }
+            else if(fecha.toString() == fechaInicio.toString() || fecha.toString() == fechaFin.toString()){
+              let titulo = document.data().titulo
+              let descripcion = document.data().descripcion
+              let frecuencia = document.data().frecuencia
+              let intervalo = document.data().intervalo
+              let tipo = document.data().tipo
+              let dosis = document.data().dosis
+              let docum = {id,titulo,descripcion,fechaFin,fechaInicio,frecuencia,intervalo,tipo,dosis}
+              list.push(docum)
+            }
           })
-
+          console.log(list.length)
           setListTasks(list)
-          console.log(list)
   }
 
   const renderTask = ({ item }) => (
@@ -55,6 +72,7 @@ export default function Dia({ navigation }) {
     />
   )
     return (
+        
         <View style={styles.formContainer}>
           <FlatList
             data = {listTasks}
