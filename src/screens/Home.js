@@ -8,16 +8,15 @@ import { View, Text } from 'react-native';
 import TratamientoClass from '../clasess/TratamientoClass';
 
 
-//const data;
-
 export default function Home() {
     
     const [tratamientos, setTratamientos] = useState(null);
         useEffect( () => {
         async function obtenerTratamientos(){
             const listaTratamientos = await TratamientoClass.obtenerListaTratamientos("8VnAyXfmKwljqS0O7NY1");
-            //setTratamientos(listaTratamientos);
-            this.tratamientos=listaTratamientos
+            setTratamientos(listaTratamientos);
+            //this.tratamientos=listaTratamientos
+            setIsVisible(false);
         }
         obtenerTratamientos();
 
@@ -25,16 +24,16 @@ export default function Home() {
     }, [])
 
  
-    /*
-    data.forEach(tratamientos => {
-        Object.entries(tratamientos).forEach(([key, value])=> {
-            console.log(`${key} ${value}`);
-        });
-   });
-   */
-    
-    for(const datos in this.tratamientos){
+
+    //Esta tomando las variables de firebase asociado a un indice 0
+    for(const datos in tratamientos){
         console.log(`${datos}: ${tratamientos[datos].descripcion}`);
+        console.log(`${datos}: ${tratamientos[datos].fechaFin}`);
+        console.log(`${datos}: ${tratamientos[datos].fechaInicio}`);
+        console.log(`${datos}: ${tratamientos[datos].frecuencia}`);
+        console.log(`${datos}: ${tratamientos[datos].intervalo}`);
+        console.log(`${datos}: ${tratamientos[datos].tipo}`);
+        console.log(`${datos}: ${tratamientos[datos].titulo}`);
     }
  
     
