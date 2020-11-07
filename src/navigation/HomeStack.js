@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
 import AgendaPrincipal from '../screens/Agenda/AgendaPrincipal';
 import Dia from '../screens/Agenda/Dia';
-import Pantalla from '../screens/Agenda/Pantalla';
+import ProgresoTratamiento from '../screens/Agenda/ProgresoTratamiento';
 
 const Stack = createStackNavigator();
 
@@ -25,9 +25,9 @@ export default function HomeStack() {
                 />
 
             <Stack.Screen 
-				name="pantalla" 
-				component={Pantalla}
-                options={{ title: "Pantalla" }}
+				name="progresotratamiento" 
+				component={ProgresoTratamiento}
+                options={({ route }) => ({ title: route.params.name })}
                 />
 
         </Stack.Navigator>

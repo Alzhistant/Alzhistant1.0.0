@@ -13,7 +13,6 @@ const user = firebase.auth().currentUser;
 
 YellowBox.ignoreWarnings(["Setting a timer"]);
 import ItemTask from '../../components/ItemTask'
-import { and } from 'react-native-reanimated';
 
 //Funcion
 export default function Dia({ route,navigation }) {
@@ -55,12 +54,13 @@ export default function Dia({ route,navigation }) {
               list.push(docum)
             }
           })
-          console.log(list.length)
           setListTasks(list)
+
   }
 
   const renderTask = ({ item }) => (
     <ItemTask
+      id = {item.id}
       titulo = {item.titulo}
       descripcion = {item.descripcion}
       fechaInicio = {item.fechaInicio}

@@ -12,6 +12,7 @@ const db = firebase.firestore(firebaseApp);
 YellowBox.ignoreWarnings(["Setting a timer"])
 
 export default function AgendaPrincipal( {navigation} ){
+	var  meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 	LocaleConfig.locales['es'] = {
 	  monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
 	  monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul.','Ago','Sept','Oct','Nov','Dic'],
@@ -49,6 +50,11 @@ export default function AgendaPrincipal( {navigation} ){
 			console.log("Nope")
 		}
 	}
+
+	/*const Meses = () => {
+		var  meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+		console.log(meses[month])
+	}*/
 	return (
 		<Calendar
 		  style={{
@@ -82,8 +88,8 @@ export default function AgendaPrincipal( {navigation} ){
 			textMonthFontSize: 16,
 			textDayHeaderFontSize: 16
 		  }}
-		  onMonthChange={(month) => {console.log('month changed', month)}}
-		onDayPress={(day) => {navigation.navigate('dia', { name: day.day + " de " + day.month + " " + day.year,day,listPacients})}}
+		  onMonthChange={(month) => {console.log(month)}}
+		onDayPress={(day) => {navigation.navigate('dia', { name: day.day + " de " + meses[day.month-1] + " " + day.year,day,listPacients})}}
 		/>
 	)
 }
