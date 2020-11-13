@@ -3,10 +3,11 @@ import { firebaseApp } from '../utils/firebase';
 import firebase from 'firebase/app';
 import "firebase/storage";
 import "firebase/firestore";
+import app from '../../App';
 
 const db = firebase.firestore(firebaseApp);
 
-export function DistanciaCoordenadas(){
+export default function DistanciaCoordenadas(){
 	db.collection('pacientes').doc('paciente-test').get()
 	.then((response) => {
 		const ubicacionPaciente = response.data().currentLocation;
@@ -42,6 +43,7 @@ export function DistanciaCoordenadas(){
 					return d;
 				}
 				else
+					sendLocalNotification(title);
 					return d;
 			});
 	});
