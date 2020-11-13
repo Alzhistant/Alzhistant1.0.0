@@ -39,7 +39,7 @@ TaskManager.defineTask(TASK_NAME, () => {
     // fetch data here...
     //sendLocalNotification()
     //
-    Sentinel.default();
+    //Sentinel.default();
     const receivedNewData = "Simulated fetch " + new Date()
     console.log("My task ", receivedNewData)
     return receivedNewData
