@@ -2,44 +2,22 @@ import React from 'react';
 import { LogBox } from 'react-native';
 import Logged from "./src/navigation/Account/Logged";
 import { firebaseApp } from './src/utils/firebase';
+import {decode, encode} from 'base-64';
 
-import Notifier from './src/components/Notifier';
+import * as Notifier from './src/Notifier';
 import * as Sentinel from './src/components/Sentinel';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import * as Notifications from 'expo-notifications';
-
-import {decode, encode} from 'base-64';
 
 
-//-------------------------------------------------------------------------------
-
-
-export function sendLocalNotification(title){
-  // Notificaciones locales (desde y "para" el celular)
-  console.log("inside sendLocalNotification")
-  Notifications.setNotificationHandler({
-    handleNotification: async () => {
-      return {
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: true,
-      };
-    },
-  });
-  
-   
-  Notifications.scheduleNotificationAsync({ content, trigger: null });
-  
-}
 const TASK_NAME = "BACKGROUND_TASK"
 
 TaskManager.defineTask(TASK_NAME, () => {
   try {
     // fetch data here...
-    //sendLocalNotification()
+    //Notifier.sendLocalNotification("esto es una notificacion");
     //
-    //Sentinel.default();
+    Sentinel.default();
     const receivedNewData = "Simulated fetch " + new Date()
     console.log("My task ", receivedNewData)
     return receivedNewData

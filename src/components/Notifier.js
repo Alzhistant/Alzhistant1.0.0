@@ -17,6 +17,28 @@ async function registerForPushNotificationsAsync(){
     }
 }
 
+export function sendLocalNotification(titleAlarm){
+    // Notificaciones locales (desde y "para" el celular)
+    //console.log("inside sendLocalNotification")
+    Notifications.setNotificationHandler({
+      handleNotification: async () => {
+        return {
+          shouldShowAlert: true,
+          shouldPlaySound: true,
+          shouldSetBadge: true,
+        };
+      },
+    });
+    
+    const content = {
+      title: titleAlarm
+    };
+  
+     
+    Notifications.scheduleNotificationAsync({ content, trigger: null });
+    
+  }
+
 export default function Notifier(){
     //console.log("inside Notifier");
     registerForPushNotificationsAsync();
