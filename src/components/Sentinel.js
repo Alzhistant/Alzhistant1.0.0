@@ -3,11 +3,15 @@ import { firebaseApp } from '../utils/firebase';
 import firebase from 'firebase/app';
 import "firebase/storage";
 import "firebase/firestore";
-
+import * as Notifier from './Notifier'
 
 const db = firebase.firestore(firebaseApp);
 
-export default function DistanciaCoordenadas(){
+const titleAlarm = "El paciente a salido del area segura!!"
+
+
+
+export function DistanciaCoordenadas(){
 	db.collection('pacientes').doc('paciente-test').get()
 	.then((response) => {
 		const ubicacionPaciente = response.data().currentLocation;
@@ -39,11 +43,17 @@ export default function DistanciaCoordenadas(){
 				
 				console.log(d);
 				
+				// si esta dentro del area "segura"
+			
 				if(d>=puntoSeguro.distance){
+					
 					return d;
 				}
+				// si no esta en el area segura
 				else
+					Notifier.sendLocalNotification(titleAlarm);
 					return d;
+					
 			});
 	});
 }
