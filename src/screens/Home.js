@@ -1,62 +1,43 @@
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Button } from "react-native-elements";
 
-import { Button } from 'react-native-elements'
-
-import React, {useEffect, useState} from 'react';
-import { View, Text } from 'react-native';
-//import { database } from 'firebase';
-//import alarma from '../Alarm/alarma'
-import TratamientoClass from '../clasess/TratamientoClass';
-
-
-export default function Home() {
-    
-    const [tratamientos, setTratamientos] = useState(null);
-        useEffect( () => {
-        async function obtenerTratamientos(){
-            const listaTratamientos = await TratamientoClass.obtenerListaTratamientos("8VnAyXfmKwljqS0O7NY1");
-            setTratamientos(listaTratamientos);
-            //this.tratamientos=listaTratamientos
-            setIsVisible(false);
-        }
-        obtenerTratamientos();
-
-
-    }, [])
-
- 
-
-    //Esta tomando las variables de firebase asociado a un indice 0
-    for(const datos in tratamientos){
-        console.log(`${datos}: ${tratamientos[datos].descripcion}`);
-        console.log(`${datos}: ${tratamientos[datos].fechaFin}`);
-        console.log(`${datos}: ${tratamientos[datos].fechaInicio}`);
-        console.log(`${datos}: ${tratamientos[datos].frecuencia}`);
-        console.log(`${datos}: ${tratamientos[datos].intervalo}`);
-        console.log(`${datos}: ${tratamientos[datos].tipo}`);
-        console.log(`${datos}: ${tratamientos[datos].titulo}`);
-    }
- 
-    
-    //const onPress= () => {console.log(tratamientos)}
-    /*
-   data.forEach(tratamientos => {
-        Object.entries(tratamientos).forEach(([key, value])=> {
-            console.log(`${key} ${value}`);
-        });
-   });
-   */
-
-
-
+export default function Home( {navigation} ) {
     return (
-        <View>
-            <Text>Home...</Text>
-           
+        <View style={styles.formContainer}>
+			<Button
+				title="Agenda"
+                containerStyle={styles.btnContainer}
+				//onPress={() => {navigation.navigate('')}}
+			/>
+			<Button
+				title="Guías"
+                containerStyle={styles.btnContainer}
+				//onPress={() => {navigation.navigate('')}}
+			/>
+			<Button
+				title="Comunidad"
+                containerStyle={styles.btnContainer}
+				//onPress={() => {navigation.navigate('')}}
+			/>
+			<Button
+				title="Sobre Nosotros"
+                containerStyle={styles.btnContainer}
+				//onPress={() => {navigation.navigate('')}}
+			/>
         </View>
     )
 }
 
-//<Button title='tratamiento' onPress={onPress}></Button>
-
-
-
+const styles = StyleSheet.create({
+    formContainer: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 30,
+    },
+	btnContainer: {
+      marginTop: 20,
+      width: "80%",
+    },
+});
