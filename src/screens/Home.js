@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from "react-native-elements";
 
 export default function Home( {navigation} ) {
+
     return (
         <View style={styles.formContainer}>
 			<Button
