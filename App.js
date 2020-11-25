@@ -4,7 +4,7 @@ import Logged from "./src/navigation/Account/Logged";
 import { firebaseApp } from './src/utils/firebase';
 import {decode, encode} from 'base-64';
 
-import * as Notifier from './src/Notifier';
+import * as Notifier from './src/components/Notifier';
 import * as Sentinel from './src/components/Sentinel';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
