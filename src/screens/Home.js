@@ -8,7 +8,7 @@ export default function Home( {navigation} ) {
 			<Button
 				title="Agenda"
                 containerStyle={styles.btnContainer}
-				//onPress={() => {navigation.navigate('')}}
+				onPress={() => {navigation.navigate('agendaprincipal')}}
 			/>
 			<Button
 				title="Guías"

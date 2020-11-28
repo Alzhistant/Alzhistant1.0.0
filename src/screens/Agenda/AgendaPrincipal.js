@@ -45,7 +45,6 @@ export default function AgendaPrincipal( {navigation} ){
 		const user = firebase.auth().currentUser;
 		console.log('UID usuario: ',user.uid)
 		if (user) {
-			//console.log('UID del usuario: ',user.uid)
 			let pacients = [];
 			const response = await db.collection('Clientes').doc(user.uid).collection('Pacientes').get()
 			response.forEach( document => {
@@ -56,36 +55,31 @@ export default function AgendaPrincipal( {navigation} ){
 				pacients.push(pacientes)			
 				})
 				setListPacients(pacients)
-				getTreatments()
-
 				
-				//console.log(list)
+				setTimeout(() => {  getTreatments(pacients); }, 1000);
+				
 		} 
 		else {
 			console.log("Nope")
 		}
 	}
 
-	const getTreatments = async() => {
+	const getTreatments = async(pacients) => {
 		var fecha = new Date(Moment(new Date(day.dateString)).add(3,'hours'))
 		
 		let tasks = [];
-		const response = await db.collection('pacientes').doc(listPacients[0].id).collection('Tratamientos').get()
+		const response = await db.collection('pacientes').doc(pacients[0].id).collection('Tratamientos').get()
 			  response.forEach( document => {
 				let id = document.id
 				var fechaInicio = new Date(document.data().fechaInicio.seconds * 1000)
 				var fechaFin = new Date(document.data().fechaFin.seconds * 1000)
-				let titulo = document.data().titulo
-				let descripcion = document.data().descripcion
-				let frecuencia = document.data().frecuencia
-				let intervalo = document.data().intervalo
-				let tipo = document.data().tipo
-				let dosis = document.data().dosis
-				let docum = {id,titulo,descripcion,fechaFin,fechaInicio,frecuencia,intervalo,tipo,dosis}
+				let docum = {fechaFin,fechaInicio}
 				tasks.push(docum)
 
 			  })
 			  setListTasks(tasks)
+
+			  markDates(tasks)
 			  console.log(tasks)
 	
 	  }
@@ -99,7 +93,7 @@ export default function AgendaPrincipal( {navigation} ){
 
 		<Calendar
 			 markedDates={{
-				'2020-11-20': {selected: true, endingDay: true, color: 'green', textColor: 'gray'}
+				//'2020-11-19': {selected: true, endingDay: true, color: 'green', textColor: 'gray'}
 			  }}
 		  theme={{
 			backgroundColor: '#ffffff',
