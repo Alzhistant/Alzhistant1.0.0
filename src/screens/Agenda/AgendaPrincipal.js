@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import { View, StyleSheet, Text, YellowBox } from 'react-native';
+import { View, StyleSheet, Text, YellowBox, Platform } from 'react-native';
 import { Button } from "react-native-elements";
-import {Calendar, CalendarList, Agenda, LocaleConfig, calendarTheme} from 'react-native-calendars';
+import {Calendar,CalendarList, Agenda, LocaleConfig, calendarTheme} from 'react-native-calendars';
 import { firebaseApp } from '../../utils/firebase';
 import firebase from 'firebase/app';
 import "firebase/firestore";
 import "firebase/storage";
+import * as CalendarExpo from 'expo-calendar';
 //https://github.com/wix/react-native-calendars
+import Moment from 'moment'
 
 const db = firebase.firestore(firebaseApp);
 YellowBox.ignoreWarnings(["Setting a timer"])
@@ -23,45 +25,76 @@ export default function AgendaPrincipal( {navigation} ){
 	LocaleConfig.defaultLocale = 'es';
 
 	const [ listPacients, setListPacients] = useState([])
-
+	const [ listTasks, setListTasks] = useState([])
 	useEffect(() => {
 		getPacients()
+		Calendario()
 	  },[])
 
+	
+	const Calendario = async() =>{
+		const { status } = await CalendarExpo.requestCalendarPermissionsAsync();
+		if (status === 'granted') {
+			const calendars = await CalendarExpo.getCalendarsAsync();
+			//console.log('Here are all your calendars:');
+			//console.log({ calendars });
+		}
+	}
+	
 	const getPacients = async() =>{
 		const user = firebase.auth().currentUser;
 		console.log('UID usuario: ',user.uid)
 		if (user) {
-			//console.log('UID del usuario: ',user.uid)
-			let list = [];
+			let pacients = [];
 			const response = await db.collection('Clientes').doc(user.uid).collection('Pacientes').get()
 			response.forEach( document => {
 				let id = document.id
 				let nombre = document.data().nombre
 				var fechaNacimiento = new Date(document.data().birthDate.seconds * 1000)
 				let pacientes = {id,nombre,fechaNacimiento}
-				list.push(pacientes)			
+				pacients.push(pacientes)			
 				})
-
-				setListPacients(list)
-				//console.log(list)
+				setListPacients(pacients)
+				
+				setTimeout(() => {  getTreatments(pacients); }, 1000);
+				
 		} 
 		else {
 			console.log("Nope")
 		}
 	}
 
-	/*const Meses = () => {
-		var  meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-		console.log(meses[month])
-	}*/
+	const getTreatments = async(pacients) => {
+		var fecha = new Date(Moment(new Date(day.dateString)).add(3,'hours'))
+		
+		let tasks = [];
+		const response = await db.collection('pacientes').doc(pacients[0].id).collection('Tratamientos').get()
+			  response.forEach( document => {
+				let id = document.id
+				var fechaInicio = new Date(document.data().fechaInicio.seconds * 1000)
+				var fechaFin = new Date(document.data().fechaFin.seconds * 1000)
+				let docum = {fechaFin,fechaInicio}
+				tasks.push(docum)
+
+			  })
+			  setListTasks(tasks)
+
+			  markDates(tasks)
+			  console.log(tasks)
+	
+	  }
 	return (
-		<Calendar
-		  style={{
-			borderWidth: 1,
+		<View
+      style={{
+        borderWidth: 1,
 			borderColor: 'gray',
 			height: 350
-		  }}
+      }}>
+
+		<Calendar
+			 markedDates={{
+				//'2020-11-19': {selected: true, endingDay: true, color: 'green', textColor: 'gray'}
+			  }}
 		  theme={{
 			backgroundColor: '#ffffff',
 			calendarBackground: '#ffffff',
@@ -91,8 +124,33 @@ export default function AgendaPrincipal( {navigation} ){
 		  onMonthChange={(month) => {console.log(month)}}
 		onDayPress={(day) => {navigation.navigate('dia', { name: day.day + " de " + meses[day.month-1] + " " + day.year,day,listPacients})}}
 		/>
+    </View>
 	)
 }
+
+async function getDefaultCalendarSource() {
+	const calendars = await CalendarExpo.getCalendarsAsync();
+	const defaultCalendars = calendars.filter(each => each.source.name === 'Default');
+	return defaultCalendars[0].source;
+  }
+
+  async function createCalendar() {
+	const defaultCalendarSource =
+	  Platform.OS === 'android'
+		? await getDefaultCalendarSource()
+		: { isLocalAccount: true, name: 'Expo Calendar' };
+	const newCalendarID = await CalendarExpo.createCalendarAsync({
+	  title: 'Expo Calendar',
+	  color: 'blue',
+	  entityType: CalendarExpo.EntityTypes.EVENT,
+	  sourceId: defaultCalendarSource.id,
+	  source: defaultCalendarSource,
+	  name: 'internalCalendarName',
+	  ownerAccount: 'personal',
+	  accessLevel: CalendarExpo.CalendarAccessLevel.OWNER,
+	});
+	console.log(`Your new calendar ID is: ${newCalendarID}`);
+  }
 
 const styles = StyleSheet.create({
     formContainer: {

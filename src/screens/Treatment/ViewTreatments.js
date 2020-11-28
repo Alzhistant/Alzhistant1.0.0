@@ -1,20 +1,14 @@
-
-import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { Button } from "react-native-elements";
 
-export default function Treatment( { navigation } ) {
+export default function ViewTreatments( { navigation }) {
     return (
         <View style={styles.formContainer}>
             <Button
-                title="Agregar Tratamiento"
+                title="Tratamiento 1"
                 containerStyle={styles.btnContainer}
-                onPress={() => {navigation.navigate('addTreatment')}}
-            />
-            <Button
-                title="Lista Tratamientos"
-                containerStyle={styles.btnContainer}
-                onPress={() => {navigation.navigate('treatmentList')}}
+                //onPress={() => {navigation.navigate('')}}
             />
         </View>
     )
