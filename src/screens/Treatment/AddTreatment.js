@@ -45,24 +45,12 @@ export default function AddTreatment( {navigation} ) {
     }
 
     const onDateChange = (date) => {
-        console.log(moment(date).format('DD/MM/YYYY').toString() + " " + moment(date).format('HH:MM').toString());
-        setFormData({...formData, ["startDate"]: moment(date).format('DD/MM/YYYY').toString() + " " + moment(date).format('HH:MM').toString()})
+        console.log(moment(date).format('DD/MM/YYYY').toString() + " " + moment(date).format('HH:mm').toString());
+        setFormData({...formData, ["startDate"]: moment(date).format('DD/MM/YYYY').toString() + " " + moment(date).format('HH:mm').toString()})
         showDatepicker();
     }
 
-    const obtenerTratamientos = async () => {
-        const listaTratamientos = await TratamientoClass.obtenerListaTratamientos("8VnAyXfmKwljqS0O7NY1");
-        console.log(typeof(listaTratamientos));
-        // listaTratamientos.forEach(doc => {
-        //     console.log(doc);
-        // });
-    }
 
-    const eliminarTratamiento = () => {
-        console.log("Hola Mundo")
-    }
-
-    
     return (
         <SafeAreaView style={styles.formContainer}>
             <ScrollView contentContainerStyle={styles.scrollViewStlye}>
@@ -125,18 +113,6 @@ export default function AddTreatment( {navigation} ) {
                     containerStyle={styles.btnContainerAdd}
                     buttonStyle={styles.btnRegister}
                     onPress={onSubmit}
-                />
-                <Button
-                    title="Obtener Tratamientos"
-                    containerStyle={styles.btnContainerAdd}
-                    buttonStyle={styles.btnRegister}
-                    onPress={obtenerTratamientos}
-                />
-                <Button
-                    title="ELiminar Tratamiento"
-                    containerStyle={styles.btnContainerAdd}
-                    buttonStyle={styles.btnRegister}
-                    onPress={eliminarTratamiento}
                 />
                 <DateTimePicker
                     isVisible = {show}
